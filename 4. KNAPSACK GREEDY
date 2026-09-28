@@ -1,0 +1,43 @@
+#include<iostream> 
+#include<algorithm> 
+using namespace std; 
+struct Item  
+{ 
+}; 
+int profit,weight; 
+float ratio; 
+bool compare(Item a, Item b) 
+{ 
+return a.ratio > b.ratio; 
+} 
+int main() 
+{ 
+int n, capacity; 
+float totalProfit=0.0; 
+cout<<"Enter no.of.Items:"; 
+cin>>n; 
+Item item[n]; 
+cout<<"Enter profit and weight of each item:\n"; 
+for(int i=0;i<n;i++) 
+{ 
+} 
+cin>> item[i].profit>> 
+item [i].weight; 
+item[i].ratio=(float) item[i].profit/item[i].weight; 
+cout<<"Enter Knapsack capacity:"; 
+cin>>capacity; 
+sort(item, item+n, compare); 
+for(int i=0;i<n;i++) 
+{ 
+if(capacity>=item[i].weight){ 
+capacity -=item[i].weight; 
+totalProfit += item[i].profit; 
+} 
+else{ 
+} 
+totalProfit += item[i].ratio*capacity; 
+break; 
+} 
+cout<<"\n Maximum Profit ="<<totalProfit; 
+return 0; 
+} 

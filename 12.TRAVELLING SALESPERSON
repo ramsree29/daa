@@ -1,0 +1,38 @@
+#include <iostream> 
+#include <climits> 
+using namespace std; 
+int n, cost[10][10]; 
+bool visited[10]; 
+int best = INT_MAX; 
+void tsp(int city, int count, int sum) {     
+if (count == n) { 
+int total = sum + cost[city][0]; 
+if (total < best) 
+best = total; 
+return; 
+}    
+if (sum >= best) 
+return; 
+for (int i = 0; i < n; i++) { 
+if (!visited[i] && cost[city][i] != 0) { 
+visited[i] = true; 
+tsp(i, count + 1, 
+sum + cost[city][i]); 
+visited[i] = false; 
+} 
+} 
+} 
+int main() { 
+cout << "Enter number of cities: "; 
+cin >> n; 
+cout << "Enter cost matrix:\n"; 
+for (int i = 0; i < n; i++) { 
+for (int j = 0; j < n; j++) { 
+cin >> cost[i][j]; 
+} 
+} 
+visited[0] = true; 
+tsp(0, 1, 0); 
+cout << "\nMinimum Tour Cost = " << best << endl; 
+return 0; 
+} 

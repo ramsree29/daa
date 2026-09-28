@@ -1,0 +1,49 @@
+#include <iostream> 
+#include <algorithm> 
+using namespace std; 
+struct Edge { 
+int src, dest, weight; 
+}; 
+bool compare(Edge a, Edge b) { 
+return a.weight < b.weight; 
+} 
+int parent[100]; 
+int find(int i) { 
+while (parent[i] != i) 
+i = parent[i]; 
+return i; 
+} 
+void Union(int a, int b) { 
+parent[a] = b; 
+} 
+int main() { 
+int V, E; 
+cout << "Enter number of vertices: "; 
+cin >> V; 
+cout << "Enter number of edges: "; 
+cin >> E; 
+Edge edges[100]; 
+cout << "Enter source destination and weight:\n"; 
+for (int i = 0; i < E; i++) { 
+cin >> edges[i].src >> edges[i].dest >> edges[i].weight; 
+} 
+sort(edges, edges + E, compare); 
+for (int i = 0; i < V; i++) { 
+parent[i] = i; 
+} 
+int count = 0, cost = 0; 
+cout << "\nEdges in Minimum Spanning Tree:\n"; 
+for (int i = 0; i < E && count < V - 1; i++) { 
+int u = find(edges[i].src); 
+int v = find(edges[i].dest); 
+if (u != v) { 
+cout << edges[i].src << " - " << edges[i].dest<< " : " << edges[i].weight << endl; 
+cost += edges[i].weight; 
+Union(u, v); 
+count++; 
+} 
+} 
+cout << "\nMinimum Cost = " << cost << endl; 
+return 0; 
+} 
+

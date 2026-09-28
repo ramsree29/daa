@@ -1,0 +1,34 @@
+#include<iostream> 
+#include<climits> 
+using namespace std; 
+int main() { 
+int n; 
+cout<<"Enter number of keys:"; 
+cin>>n; 
+int key[20],freq[20],cost[20][20]; 
+cout<<"Enter keys:\n"; 
+for(int i=0;i<n;i++) 
+cin>>key[i]; 
+cout<<"Enter frequencies:\n"; 
+ for(int i=0;i<n;i++) 
+  cin>>freq[i]; 
+ for(int i=0;i<n;i++) 
+  cost[i][i]=freq[i]; 
+ for(int len=2;len<=n;len++){ 
+  for(int i=0;i<=n-len;i++){ 
+   int j=i+len-1; 
+   cost[i][j]=INT_MAX; 
+   int sum=0; 
+   for(int k=i;k<=j;k++) 
+    sum+=freq[k]; 
+   for(int r=i;r<=j;r++){ 
+    int left=(r>i)?cost[i][r-1]:0; 
+    int right=(r<j)?cost[r+1][j]:0; 
+    int total=left+right+sum; 
+    if(total<cost[i][j]) 
+    cost[i][j]=total; 
+   } } 
+ } 
+ cout<<"\nMinimum search cost="<<cost[0][n-1]<<endl; 
+ return 0; 
+} 

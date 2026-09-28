@@ -1,0 +1,44 @@
+#include <iostream> 
+#include <algorithm> 
+using namespace std; 
+struct Item { 
+int w, p; 
+double r; 
+}; 
+bool cmp(Item a, Item b) { 
+return a.r > b.r;} 
+int n, W, ans = 0; 
+Item a[20]; 
+double bound(int i, int wt, int profit) { 
+double b = profit; 
+while (i < n && wt + a[i].w <= W) { 
+wt += a[i].w; 
+b += a[i].p; 
+i++;    } 
+if (i < n) 
+b += (W - wt) * a[i].r; 
+return b;} 
+void knapsack(int i, int wt, int profit) { 
+if (i == n) { 
+ans = max(ans, profit); 
+return;    } 
+if (bound(i, wt, profit) <= ans) 
+return;     
+if (wt + a[i].w <= W) 
+knapsack(i + 1, wt + a[i].w, profit + a[i].p);     
+knapsack(i + 1, wt, profit);} 
+int main() { 
+cout << "Enter number of items: "; 
+cin >> n; 
+cout << "Enter knapsack capacity: "; 
+cin >> W; 
+cout << "Enter weight and profit of each item:\n"; 
+for (int i = 0; i < n; i++) { 
+cout << "Item " << i + 1 << ": "; 
+cin >> a[i].w >> a[i].p; 
+a[i].r = (double)a[i].p / a[i].w;    } 
+sort(a, a + n, cmp); 
+knapsack(0, 0, 0); 
+cout << "\nMaximum Profit = " << ans << endl; 
+return 0; 
+} 
